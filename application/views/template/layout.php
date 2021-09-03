@@ -6,10 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reskara Bootsrap</title>
-  <link rel="icon" href="assets/img/logos/logo-square.png" type="image/icon type">
-  <link rel="stylesheet" href="assets/plugins/bootstrap-5.0.2-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/plugins/highlightjs-11.1.0/atom-one-dark.min.css">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="<?= base_url('public') ?>/assets/img/logos/logo-square.png" type="image/icon type">
+  <link rel="stylesheet" href="<?= base_url('public') ?>/assets/plugins/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?= base_url('public') ?>/assets/plugins/highlightjs-11.1.0/atom-one-dark.min.css">
+  <link rel="stylesheet" href="<?= base_url('public') ?>/assets/css/style.css">
 </head>
 
 <body>
@@ -18,11 +18,11 @@
   </noscript>
   <nav class="side-nav">
     <div class="logo">
-      <a href="index.html"><img src="assets/img/logos/logo-landscape.png" alt="logo"></a>
+      <a href="index.html"><img src="<?= base_url('public') ?>/assets/img/logos/logo-landscape.png" alt="logo"></a>
       <button class="btn btn-default ml-auto py-0 px-0 minify-sidenav"><i class="fa fa-align-justify"></i><i class="fa fa-align-right"></i></button>
     </div>
     <div class="d-flex justify-content-center mb-2">
-      <img src="assets/img/avatar/gp-white.jpg" class="avatar" alt="gp">
+      <img src="<?= base_url('public') ?>/assets/img/avatar/gp-white.jpg" class="avatar" alt="gp">
     </div>
     <div class="text-center mini-hide"> <span>Paijo Suwiryo</span> </div>
     <div class="text-center mini-hide text-tertiary mb-3">
@@ -93,7 +93,7 @@
       <ul class="appbar-menu">
         <li><a href="#"><i class="fa fa-bell"></i><span class="caption">Notifications</span></a></li>
         <li><a href="#"><i class="fa fa-envelope"></i><span class="caption">Emails</span></a></li>
-        <li class="dropdown"><a href="#"><img src="assets/img/avatar/gp-white.jpg" alt="gp" class="appbar-avatar"><span class="caption visible">Paijo</span></a>
+        <li class="dropdown"><a href="#"><img src="<?= base_url('public') ?>/assets/img/avatar/gp-white.jpg" alt="gp" class="appbar-avatar"><span class="caption visible">Paijo</span></a>
           <ul class="py-2">
             <li><a href="#" class="py-1 d-flex justify-items-center">
                 <i class="fa fa-user text-blue me-2"></i>
@@ -118,14 +118,14 @@
           Pratama</a></div>
     </div>
   </footer>
-  <script src="assets/plugins/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/plugins/jquery-3.6.0/jquery.min.js"></script>
-  <script src="assets/js/reskara-bootstrap.js"></script>
+  <script src="<?= base_url('public') ?>/assets/plugins/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="<?= base_url('public') ?>/assets/plugins/jquery-3.6.0/jquery.min.js"></script>
+  <script src="<?= base_url('public') ?>/assets/js/reskara-bootstrap.js"></script>
   <script>
     $(document).ready(function() {
       const awesome = document.createElement("link")
       awesome.setAttribute("rel", "stylesheet")
-      awesome.setAttribute("href", "assets/plugins/fontawesome-free/css/all.min.css")
+      awesome.setAttribute("href", "<?= base_url('public') ?>/assets/plugins/fontawesome-free/css/all.min.css")
       document.querySelector("head").appendChild(awesome)
 
     })
