@@ -35,6 +35,7 @@
         </div>
         <a href="<?= base_url('public') ?>/">Forgot password?</a>
       </div>
+      <button class="btn btn-primary btn-block w-100 btn-md mt-5">Sign in</button>
     </form>
   </div>
 </body>
