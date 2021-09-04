@@ -1,5 +1,5 @@
 <?php
-class Login extends CI_Controller
+class Dashboard extends Auth_Controller
 {
     function __construct()
     {
@@ -8,6 +8,6 @@ class Login extends CI_Controller
 
     function index()
     {
-        $this->load->view("auth/login");
+        $this->load->view('dashboard/dashboard');
     }
 }

@@ -99,7 +99,7 @@
                 <i class="fa fa-user text-blue me-2"></i>
                 <div>Profile</div>
               </a></li>
-            <li><a href="pages/login.html" class="py-1 d-flex justify-items-center">
+            <li><a href="<?= base_url('auth/sign/logout') ?>" class="py-1 d-flex justify-items-center">
                 <i class="fa fa-sign-out-alt text-danger me-2"></i>
                 <div>logout</div>
               </a></li>
@@ -137,7 +137,7 @@
     const content = document.getElementById("content")
 
     if (window.location.hash !== "") loading(window.location.hash.substr(2), window.location.hash)
-    else loading("pages/dashboard.html")
+    else loading("dashboard/dashboard")
 
     window.addEventListener("hashchange", function(ev) {
       const href = findHash(ev.newURL);
@@ -182,7 +182,7 @@
         </div>
       </div>`)
       $.ajax({
-        url: url,
+        url: base_url + url,
         type: "GET",
         mimeType: "text/html charset=utf-8",
         async: true,
