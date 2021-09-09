@@ -8,6 +8,7 @@ class Dashboard extends Auth_Controller
 
     function index()
     {
-        $this->load->view('dashboard/dashboard');
+        $data = $this->session->userdata("reskara_login");
+        $this->load->view('dashboard/dashboard', $data);
     }
 }

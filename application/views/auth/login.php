@@ -16,17 +16,18 @@
     <p>To display this page you need a browser that supports JavaScript.</p>
   </noscript>
   <div class="d-flex justify-content-center justify-items-center">
-    <form class="login-form ps-4 pe-4">
+    <form class="login-form ps-4 pe-4" id="form-login">
       <img src="<?= base_url('public') ?>/assets/img/logos/logo-square.png" class="logo" alt="logo">
       <div class="text-super-black text-family-ssp fs-1" style="font-weight: 700;">Sign in</div>
       <div class="pb-4">Don't have an account? <a href="<?= base_url('public') ?>/">Sign up</a></div>
+
       <div class="form-group">
         <label for="username">Email/username</label>
-        <input type="text" id="username" class="form-control">
+        <input type="text" id="username" name="username" required class="form-control">
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" class="form-control">
+        <input type="password" id="password" name="password" required class="form-control">
       </div>
       <div class="d-flex justify-items-center justify-content-between align-items-center">
         <div class="d-flex justify-items-center align-items-center">
@@ -35,9 +36,29 @@
         </div>
         <a href="<?= base_url('public') ?>/">Forgot password?</a>
       </div>
-      <button class="btn btn-primary btn-block w-100 btn-md mt-5">Sign in</button>
+      <button class="btn btn-primary btn-block w-100 btn-md mt-5" type="submit">Sign in</button>
     </form>
   </div>
 </body>
+<script src="<?= base_url('public') ?>/assets/plugins/jquery-3.6.0/jquery.min.js"></script>
+<script src="<?= base_url() ?>public/assets/plugins/sweetalert2/new/sweetalert2.min.js"></script>
+<script>
+  let base_url = "<?= base_url() ?>"
+
+  $("#form-login").submit(function(e) {
+    e.preventDefault()
+    $.ajax({
+      url: base_url + "auth/sign/in",
+      type: "POST",
+      data: $(this).serialize(),
+      success: function(data) {
+        location.href = base_url
+      },
+      error: function(j, s, e) {
+
+      }
+    })
+  })
+</script>
 
 </html>
