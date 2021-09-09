@@ -15,6 +15,9 @@
 <body>
   <noscript>
     <p>To display this page you need a browser that supports JavaScript.</p>
+    <?php
+    print_r($menu);
+    ?>
   </noscript>
   <nav class="side-nav">
     <div class="logo">

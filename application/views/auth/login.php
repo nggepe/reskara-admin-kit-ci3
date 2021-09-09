@@ -73,7 +73,7 @@
   loading.hide()
 
   $("#form-login").submit(function(e) {
-    loading.fadeIn()
+    loading.show()
     e.preventDefault()
     $.ajax({
       url: base_url + "auth/sign/in",
@@ -84,8 +84,8 @@
         location.href = base_url
       },
       error: function(j, s, e) {
-        loading.fadeOut()
-        is_valid.fadeIn(600)
+        loading.hide()
+        is_valid.fadeIn()
       }
     })
   })
