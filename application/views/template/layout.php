@@ -29,27 +29,13 @@
       <small>paijo@domain.com</small>
     </div>
     <ul>
-      <li><a href="pages/dashboard.html"><i class="fa fa-tachometer-alt text-blue"></i><span>Dashboard</span></a></li>
+      <li><a href="admin/dashboard"><i class="fa fa-tachometer-alt text-blue"></i><span>Dashboard</span></a></li>
       <li>
         <a href="javascript:" class="has-child">
-          <i class="fa fa-dharmachakra text-orange"></i><span>Components</span>
+          <i class="fa fa-dharmachakra text-orange"></i><span>Master</span>
         </a>
         <ul>
-          <li><a href="pages/accordions.html"><span>Accordion</span></a></li>
-          <li><a href="pages/alert.html"><span>Alerts</span></a></li>
-          <li><a href="pages/badge.html"><span>Badge</span></a></li>
-          <li><a href="pages/breadcrumbs.html"><span>Breadcrumb</span></a></li>
-          <li><a href="#"><span>Buttons</span></a></li>
-          <li><a href="#"><span>Button Group</span></a></li>
-          <li><a href="pages/cards.html"><span>Card</span></a></li>
-          <li><a href="#"><span>Carousel</span></a></li>
-          <li><a href="#"><span>Close Button</span></a></li>
-          <li><a href="#"><span>Collapse</span></a></li>
-          <li><a href="#"><span>Dropdowns</span></a></li>
-          <li><a href="#"><span>List Group</span></a></li>
-          <li><a href="#"><span>Modal</span></a></li>
-          <li><a href="#"><span>Nav & tabs</span></a></li>
-          <li><a href="pages/spinner.html"><span>Spinner</span></a></li>
+          <li><a href="admin/master/user"><span>Users</span></a></li>
         </ul>
       </li>
       <li>
@@ -94,7 +80,7 @@
         <li><a href="#"><i class="fa fa-bell"></i><span class="caption">Notifications</span></a></li>
         <li><a href="#"><i class="fa fa-envelope"></i><span class="caption">Emails</span></a></li>
         <li class="dropdown"><a href="#"><img src="<?= base_url('public') ?>/assets/img/avatar/gp-white.jpg" alt="gp" class="appbar-avatar"><span class="caption visible">Paijo</span></a>
-          <ul class="py-2">
+          <ul class="py-2 primary-y-shadow rounded-3">
             <li><a href="#" class="py-1 d-flex justify-items-center">
                 <i class="fa fa-user text-blue me-2"></i>
                 <div>Profile</div>
@@ -137,7 +123,7 @@
     const content = document.getElementById("content")
 
     if (window.location.hash !== "") loading(window.location.hash.substr(2), window.location.hash)
-    else loading("dashboard/dashboard")
+    else loading("admin/dashboard")
 
     window.addEventListener("hashchange", function(ev) {
       const href = findHash(ev.newURL);

@@ -19,6 +19,7 @@ class Sign extends Res_Controller
             $this->response401();
         else {
             unset($result->password);
+            $result->avatar = base_url() . $result->avatar;
             $this->session->set_userdata("reskara_login", $result);
             $this->response200($result);
         }
