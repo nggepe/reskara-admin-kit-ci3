@@ -31,42 +31,7 @@
     <div class="text-center mini-hide text-tertiary mb-3">
       <small>paijo@domain.com</small>
     </div>
-    <ul>
-      <li><a href="admin/dashboard"><i class="fa fa-tachometer-alt text-blue"></i><span>Dashboard</span></a></li>
-      <li>
-        <a href="javascript:" class="has-child">
-          <i class="fa fa-dharmachakra text-orange"></i><span>Master</span>
-        </a>
-        <ul>
-          <li><a href="admin/master/user"><span>Users</span></a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="javascript:" class="has-child"><i class="fa fa-layer-group text-js"></i><span>Multi level
-            menu</span></a>
-        <ul>
-          <li><a href="#"><span>Menu 1</span></a></li>
-          <li><a href="#"><span>Menu 2</span></a></li>
-          <li>
-            <a href="javascript:" class="has-child"><span>Menu 3</span></a>
-            <ul>
-              <li><a href="#"><span>Menu 1</span></a></li>
-              <li><a href="#"><span>Menu 2</span></a></li>
-              <li>
-                <a href="javascript:" class="has-child"><span>Menu 3</span></a>
-                <ul>
-                  <li><a href="#"><span>Menu 1</span></a></li>
-                  <li><a href="#"><span>Menu 2</span></a></li>
-                  <li>
-                    <a><span>Menu 3</span></a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <?= $menu ?>
   </nav>
   <nav class="appbar">
     <div class="appbar-items">
