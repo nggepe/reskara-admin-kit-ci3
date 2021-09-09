@@ -12,15 +12,21 @@ class Sign extends Res_Controller
         $this->load->view("auth/login");
     }
 
-    function sign()
+    function in()
     {
         $result = $this->auth->sign($this->input->post('username'), $this->input->post('password'));
-        $this->json_response($result);
+        if ($result == null)
+            $this->response401();
+        else {
+            unset($result->password);
+            $this->session->set_userdata("reskara_login", $result);
+            $this->response200($result);
+        }
     }
 
     function logout()
     {
-        $this->session->uset_userdata("reskara_login");
+        $this->session->unset_userdata("reskara_login");
         redirect(base_url('auth/sign/login'));
     }
 }

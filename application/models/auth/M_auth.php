@@ -8,12 +8,6 @@ class M_auth extends CI_Model
         $this->db->where('username', $username);
         $this->db->where('password', $password);
         $data = $this->db->get('user')->row();
-
-
-
-        if ($data) {
-            $this->session->set_userdata("reskara_login", $data);
-            return true;
-        } else return false;
+        return $data;
     }
 }
