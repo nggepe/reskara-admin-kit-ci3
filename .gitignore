@@ -29,3 +29,9 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+
+
+# public
+public/img/user-avatar/*
+!public/img/user-avatar/index.html
+!public/img/user-avatar/gp-white.jpg

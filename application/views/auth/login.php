@@ -22,6 +22,28 @@
       <div class="pb-4">Don't have an account? <a href="<?= base_url('public') ?>/">Sign up</a></div>
       <div class="justify-content-center justify-items-center text-center py-3 mb-3 border-danger text-danger is-valid"> Invalid
         username/password </div>
+      <div class="loading text-center py-3">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-grow text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-secondary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-danger" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <div class="text-warning pt-3" role="status">
+          <span>Loading...</span>
+        </div>
+      </div>
       <div class="form-group">
         <label for="username">Email/username</label>
         <input type="text" id="username" name="username" required class="form-control">
@@ -45,21 +67,25 @@
 <script src="<?= base_url() ?>public/assets/plugins/sweetalert2/new/sweetalert2.min.js"></script>
 <script>
   let base_url = "<?= base_url() ?>"
-  const is_valid = $(".is-valid")
+  const is_valid = $(".is-valid"),
+    loading = $(".loading")
   is_valid.hide()
+  loading.hide()
 
   $("#form-login").submit(function(e) {
+    loading.fadeIn()
     e.preventDefault()
     $.ajax({
       url: base_url + "auth/sign/in",
       type: "POST",
       data: $(this).serialize(),
       success: function(data) {
-        is_valid.fadeOut()
+        loading.fadeOut()
         location.href = base_url
       },
       error: function(j, s, e) {
-        is_valid.fadeIn(400)
+        loading.fadeOut()
+        is_valid.fadeIn(600)
       }
     })
   })
