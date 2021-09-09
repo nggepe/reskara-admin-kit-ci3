@@ -20,7 +20,8 @@
       <img src="<?= base_url('public') ?>/assets/img/logos/logo-square.png" class="logo" alt="logo">
       <div class="text-super-black text-family-ssp fs-1" style="font-weight: 700;">Sign in</div>
       <div class="pb-4">Don't have an account? <a href="<?= base_url('public') ?>/">Sign up</a></div>
-
+      <div class="justify-content-center justify-items-center text-center py-3 mb-3 border-danger text-danger is-valid"> Invalid
+        username/password </div>
       <div class="form-group">
         <label for="username">Email/username</label>
         <input type="text" id="username" name="username" required class="form-control">
@@ -44,6 +45,8 @@
 <script src="<?= base_url() ?>public/assets/plugins/sweetalert2/new/sweetalert2.min.js"></script>
 <script>
   let base_url = "<?= base_url() ?>"
+  const is_valid = $(".is-valid")
+  is_valid.hide()
 
   $("#form-login").submit(function(e) {
     e.preventDefault()
@@ -52,10 +55,11 @@
       type: "POST",
       data: $(this).serialize(),
       success: function(data) {
+        is_valid.fadeOut()
         location.href = base_url
       },
       error: function(j, s, e) {
-
+        is_valid.fadeIn(400)
       }
     })
   })
