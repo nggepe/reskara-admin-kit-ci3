@@ -36,4 +36,18 @@ class User extends Auth_Controller
         );
         echo json_encode($output);
     }
+
+    function select2_privilege()
+    {
+        $q = $this->input->get("q");
+        $page = $this->input->get("page");
+
+        $this->db->from("privilege");
+        $this->db->like("name", $q);
+        $this->db->where("name<>'developer'");
+        $this->db->limit(10, (10 * $page));
+        $data = $this->db->get()->result();
+
+        $this->response200(["items" => $data, "count" => count($data)]);
+    }
 }
