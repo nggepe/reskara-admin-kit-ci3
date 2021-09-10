@@ -15,7 +15,7 @@ class Res_Controller extends CI_Controller
     function response_custom($code, $body)
     {
         http_response_code($code);
-        exit($body);
+        exit(json_encode($body));
     }
 
     function response400()
