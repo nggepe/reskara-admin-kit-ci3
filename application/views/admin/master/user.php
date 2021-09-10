@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="collapse-card-item">
-          <form id="user-form">
+          <form id="user-form" action="#" method="POST">
             <div class="card-body text-secondary">
               <div class="row">
                 <div class="col-md-6 form-group">
@@ -46,9 +46,9 @@
                   <input type="password" required class="form-control" id="retypepassword" name="retypepassword">
                 </div>
                 <div class="col-md-6 form-group">
-                  <label for="email">Email</label>
-                  <input type="email" required class="form-control" id="email" name="email">
-
+                  <label for="id_privilege">Privilege</label>
+                  <select class="select2 form-control" id="id_privilege" name="id_privilege">
+                  </select>
                 </div>
               </div>
             </div>
@@ -90,6 +90,8 @@
 <script src="<?= base_url() ?>public/assets/js/components.js"></script>
 <script src="<?= base_url() ?>public/assets/plugins/datatables-1.11.1/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() ?>public/assets/plugins/select2-4.1.0/select2.min.js"></script>
+
+<script src="<?= base_url() ?>public/assets/js/jquery.form-helper.js"></script>
 
 <script>
   var cardForm = $("#card-form"),
@@ -134,6 +136,10 @@
           next: "<i class='fas fa-angle-right'>"
         },
       },
+    })
+
+    $("#user-form").on("submit", function(e) {
+      e.preventDefault()
     })
   })
 
