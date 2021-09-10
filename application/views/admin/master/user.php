@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="collapse-card-item">
-          <form id="user-form">
+          <form id="user-form" action="#" method="POST">
             <div class="card-body text-secondary">
               <div class="row">
                 <div class="col-md-6 form-group">
@@ -46,9 +46,9 @@
                   <input type="password" required class="form-control" id="retypepassword" name="retypepassword">
                 </div>
                 <div class="col-md-6 form-group">
-                  <label for="email">Email</label>
-                  <input type="email" required class="form-control" id="email" name="email">
-
+                  <label for="id_privilege">Privilege</label>
+                  <select required class="form-control w-100 d-block" id="id_privilege" name="id_privilege">
+                  </select>
                 </div>
               </div>
             </div>
@@ -90,6 +90,8 @@
 <script src="<?= base_url() ?>public/assets/js/components.js"></script>
 <script src="<?= base_url() ?>public/assets/plugins/datatables-1.11.1/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() ?>public/assets/plugins/select2-4.1.0/select2.min.js"></script>
+
+<script src="<?= base_url() ?>public/assets/js/jquery.form-helper.js"></script>
 
 <script>
   var cardForm = $("#card-form"),
@@ -134,6 +136,54 @@
           next: "<i class='fas fa-angle-right'>"
         },
       },
+    })
+
+    $("#user-form").on("submit", function(e) {
+      e.preventDefault()
+    })
+
+
+    $(document).on('select2:open', () => {
+      document.querySelector('.select2-search__field').focus();
+    });
+    $("#id_privilege").select2({
+      ajax: {
+        url: base_url + 'admin/master/user/select2_privilege',
+        dataType: 'json',
+        data: function(params) {
+          return {
+            q: params.term,
+            page: params.page
+          }
+        },
+        processResults: function(data, params) {
+          return {
+            results: data.items,
+            pagination: {
+              more: (data.count == 10)
+            },
+            cache: true
+          };
+        }
+      },
+      id: function(data) {
+        return data.id
+      },
+      templateResult: function(data) {
+        return $(`
+        <div >
+            ${data.name}
+        </div>
+        `)
+      },
+      templateSelection: function(data) {
+        $(this).val(data.id)
+
+        return data.name
+      },
+      placeholder: "Identitas member/anggota",
+      allowClear: true,
+      width: "resolve"
     })
   })
 
