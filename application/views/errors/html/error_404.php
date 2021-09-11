@@ -1,64 +1,114 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>404 Page Not Found</title>
-<style type="text/css">
+<style>
+	body {
+		padding: 0;
+		margin: 0;
+	}
 
-::selection { background-color: #E13300; color: white; }
-::-moz-selection { background-color: #E13300; color: white; }
+	.error-wall {
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		text-align: center;
+		z-index: 9999999;
+	}
 
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
+	.error-wall.load-error {
+		background-color: #5ea6f3;
+	}
 
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
+	.error-wall.matinence {
+		background-color: #a473b1;
+	}
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
+	.error-wall.missing-page {
+		background-color: #00bbc6;
+	}
 
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
+	.error-wall .error-container {
+		display: block;
+		width: 100%;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+	}
 
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	box-shadow: 0 0 8px #D0D0D0;
-}
+	.error-wall .error-container h1 {
+		color: #fff;
+		font-size: 80px;
+		margin: 0;
+	}
 
-p {
-	margin: 12px 15px 12px 15px;
-}
+	@media (max-width: 850px) {
+		.error-wall .error-container h1 {
+			font-size: 65px;
+		}
+	}
+
+	.error-wall .error-container h3 {
+		color: #464444;
+		font-size: 34px;
+		margin: 0;
+	}
+
+	@media (max-width: 850px) {
+		.error-wall .error-container h3 {
+			font-size: 25px;
+		}
+	}
+
+	.error-wall .error-container h4 {
+		margin: 0;
+		color: #fff;
+		font-size: 40px;
+	}
+
+	@media (max-width: 850px) {
+		.error-wall .error-container h4 {
+			font-size: 35px;
+		}
+	}
+
+	.error-wall .error-container p {
+		font-size: 15px;
+	}
+
+	.error-wall .error-container p:first-of-type {
+		color: #464444;
+		font-weight: lighter;
+	}
+
+	.error-wall .error-container p:nth-of-type(2) {
+		color: #464444;
+		font-weight: bold;
+	}
+
+	.error-wall .error-container p.type-white {
+		color: #fff;
+	}
+
+	@media (max-width: 850px) {
+		.error-wall .error-container p {
+			font-size: 12px;
+		}
+	}
+
+	@media (max-width: 390px) {
+		.error-wall .error-container p {
+			font-size: 10px;
+		}
+	}
 </style>
-</head>
-<body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
+<div class="error-wall load-error">
+	<div class="error-container">
+		<h1>Oops!</h1>
+		<h3>We have had an error</h3>
+		<h4>Error 404</h4>
+		<p>Sorry...We don't find your page!</p>
+		<p>You can go back <a href="javascript:history.go(-1)">here</a></p>
 	</div>
-</body>
-</html>
+</div>
