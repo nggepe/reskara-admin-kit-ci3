@@ -75,6 +75,8 @@
   <script src="<?= base_url('public') ?>/assets/plugins/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
   <script src="<?= base_url('public') ?>/assets/plugins/jquery-3.6.0/jquery.min.js"></script>
   <script src="<?= base_url('public') ?>/assets/js/reskara-bootstrap.js"></script>
+  <script src="<?= base_url() ?>public/assets/plugins/sweetalert2/new/sweetalert2.min.js"></script>
+  <script src="<?= base_url() ?>public/assets/js/jquery.form-helper.js"></script>
   <script>
     $(document).ready(function() {
       const awesome = document.createElement("link")
@@ -144,6 +146,9 @@
         success: function(data) {
           $("#content").html(data)
           if (after != "none") window.location.hash = after
+        },
+        error: function(xhr, status, error) {
+          reskara_error_handler(xhr, base_url)
         }
       })
     }

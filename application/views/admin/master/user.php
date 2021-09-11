@@ -50,6 +50,18 @@
                   <select required class="form-control w-100 d-block" id="id_privilege" name="id_privilege">
                   </select>
                 </div>
+                <div class="col-md-6 form-group">
+                  <label for="phone_number">Phone Number</label>
+                  <input type="text" class="form-control" id="phone_number" name="phone_number">
+                </div>
+                <div class="col-md-6 form-group">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control" id="address" name="address">
+                </div>
+                <div class="col-md-6 form-group">
+                  <label for="avatar">Avatar</label>
+                  <input type="text" class="form-control" id="avatar" name="avatar">
+                </div>
               </div>
             </div>
             <div class="card-footer text-end">
@@ -90,12 +102,10 @@
 <script src="<?= base_url() ?>public/assets/js/components.js"></script>
 <script src="<?= base_url() ?>public/assets/plugins/datatables-1.11.1/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() ?>public/assets/plugins/select2-4.1.0/select2.min.js"></script>
-
-<script src="<?= base_url() ?>public/assets/js/jquery.form-helper.js"></script>
-
 <script>
   var cardForm = $("#card-form"),
-    table
+    table, validation = false,
+    save_method = "add"
 
   $(document).ready(function() {
     cardForm.hide()
@@ -107,7 +117,7 @@
       "order": [],
       "ajax": {
         "url": base_url + "admin/master/user/datatable",
-        "type": "POST"
+        "type": "POST",
       },
 
       "columnDefs": [{
@@ -164,6 +174,9 @@
             },
             cache: true
           };
+        },
+        error: function(xhr, status, error) {
+          reskara_error_handler(xhr, base_url)
         }
       },
       id: function(data) {
@@ -194,6 +207,37 @@
   }
 
   function edit(id) {
+    save_method = "edit"
     open_form()
+  }
+
+  function deleteData(id) {
+    Swal.fire({
+      title: 'Anda yakin?',
+      text: "Data akan dihapus secara permanent!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya!',
+      cancelButtonText: 'Batal'
+    }).then(function(result) {
+      if (result.isConfirmed) {
+        showLoading()
+        $.ajax({
+          url: base_url + "members/delete/" + id,
+          type: 'GET',
+          success: function(data) {
+            table.ajax.reload()
+            alertDeleteSuccess()
+            hideLoading()
+          },
+          error: function(xhr, status, error) {
+            hideLoading()
+            alertSessionEnd()
+          }
+        })
+      }
+    })
   }
 </script>

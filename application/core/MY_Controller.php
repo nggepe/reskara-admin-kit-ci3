@@ -37,7 +37,10 @@ class Auth_Controller extends Res_Controller
     {
         parent::__construct();
         $sess = $this->session->userdata();
-        if (!isset($sess['reskara_login'])) redirect(base_url("auth/sign/login"));
+        if (!isset($sess['reskara_login'])) {
+            http_response_code(401);
+            $this->load->view("errors/html/error_401");
+        }
     }
 
     function get_user_login()
