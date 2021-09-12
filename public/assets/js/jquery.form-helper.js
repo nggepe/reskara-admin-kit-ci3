@@ -17,9 +17,9 @@ function reskara_error_handler(xhr, base_url) {
     })
   }
 
-  if (xhr.status == 404) {
+  else if (xhr.status == 404) {
     Swal.fire({
-      title: 'Sorry!',
+      title: '404',
       text: "There is no page here!",
       icon: "warning",
       showCancelButton: true,
@@ -34,4 +34,27 @@ function reskara_error_handler(xhr, base_url) {
     })
   }
 
+  else {
+    Swal.fire({
+      title: "Oops!",
+      text: xhr.responseText,
+      icon: "warning",
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Ya!',
+    })
+  }
+}
+
+function swalSaveSuccess() {
+  Swal.fire({
+    title: 'Great!',
+    text: "The data have been save successfully!",
+    icon: "success",
+  })
+}
+
+function clearForm(el) {
+  $(el).find("input").val("")
+  $(el).find("textarea").val("")
+  $(el).find("select").val("")
 }
