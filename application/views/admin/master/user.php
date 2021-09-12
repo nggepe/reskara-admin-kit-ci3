@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-6 form-group">
                   <label for="avatar">Avatar</label>
-                  <input type="text" class="form-control" id="avatar" name="avatar">
+                  <input type="file" class="form-control" id="avatar" name="avatar">
                 </div>
               </div>
             </div>
@@ -105,7 +105,8 @@
 <script>
   var cardForm = $("#card-form"),
     table, validation = false,
-    save_method = "add"
+    save_method = "add",
+    password_retype = true
 
   $(document).ready(function() {
     cardForm.hide()
@@ -150,7 +151,30 @@
 
     $("#user-form").on("submit", function(e) {
       e.preventDefault()
+
     })
+
+    $("#retypepassword").keyup(function(e) {
+        retypeValidation(this)
+      }),
+      $("#retypepassword").on("blur", function(e) {
+        retypeValidation(this)
+      })
+
+    function retypeValidation(el) {
+      const parentGroup = $(el).parents(".form-group")
+
+      if ($(el).val() == $("#password").val())
+        parentGroup.removeClass("has-error"), parentGroup.find(".text-helper").remove(), password_retype = true;
+      else {
+        if (parentGroup.hasClass("has-error") == false)
+          parentGroup.addClass("has-error"),
+          parentGroup.append("<small class='text-danger text-helper'>Password isn't match!</small>")
+
+        password_retype = false;
+      }
+    }
+
 
 
     $(document).on('select2:open', () => {
