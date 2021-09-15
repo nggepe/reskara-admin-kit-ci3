@@ -12,6 +12,12 @@ class Sign extends Res_Controller
         $this->load->view("auth/login");
     }
 
+    function login401()
+    {
+        http_response_code(401);
+        $this->load->view("auth/login");
+    }
+
     function in()
     {
         $result = $this->auth->sign($this->input->post('username'), $this->input->post('password'));

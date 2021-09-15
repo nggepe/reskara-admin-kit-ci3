@@ -38,14 +38,21 @@ class Auth_Controller extends Res_Controller
         parent::__construct();
         $sess = $this->session->userdata();
         if (!isset($sess['reskara_login'])) {
-            http_response_code(401);
-            $this->load->view("errors/html/error_401");
+            redirect(base_url() . "auth/sign/login401");
         }
     }
 
     function get_user_login()
     {
         return $this->session->userdata("reskara_login");
+    }
+
+
+    function isLogedIn()
+    {
+        $sess = $this->session->userdata();
+        if (isset($sess['reskara_login'])) return true;
+        else return false;
     }
 
     function get_menu()

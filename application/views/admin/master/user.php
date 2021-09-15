@@ -38,6 +38,10 @@
                   <input type="text" class="form-control" id="username" required name="username">
                 </div>
                 <div class="col-md-6 form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" required name="email">
+                </div>
+                <div class="col-md-6 form-group">
                   <label for="password">Password</label>
                   <input type="password" class="form-control" required id="password" name="password">
                 </div>
@@ -57,10 +61,6 @@
                 <div class="col-md-6 form-group">
                   <label for="address">Address</label>
                   <input type="text" class="form-control" id="address" name="address">
-                </div>
-                <div class="col-md-6 form-group">
-                  <label for="avatar">Avatar</label>
-                  <input type="text" class="form-control" id="avatar" name="avatar">
                 </div>
               </div>
             </div>
@@ -105,7 +105,9 @@
 <script>
   var cardForm = $("#card-form"),
     table, validation = false,
-    save_method = "add"
+    save_method = "add",
+    password_retype = true,
+    global_id_user
 
   $(document).ready(function() {
     cardForm.hide()
@@ -150,8 +152,46 @@
 
     $("#user-form").on("submit", function(e) {
       e.preventDefault()
+      const form = this
+      var url = ""
+      if (save_method == "add") url = base_url + "admin/master/user/save"
+      else url = base_url + "admin/master/user/update/" + global_id_user
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(data) {
+          swalSaveSuccess()
+          table.ajax.reload()
+          clearForm(form)
+          $("#id_privilege").val("").trigger("change")
+        },
+        error: function(x, s, e) {
+          reskara_error_handler(x, base_url)
+        }
+      })
     })
 
+    $("#retypepassword").keyup(function(e) {
+        retypeValidation(this)
+      }),
+      $("#retypepassword").on("blur", function(e) {
+        retypeValidation(this)
+      })
+
+    function retypeValidation(el) {
+      const parentGroup = $(el).parents(".form-group")
+
+      if ($(el).val() == $("#password").val())
+        parentGroup.removeClass("has-error"), parentGroup.find(".text-helper").remove(), password_retype = true;
+      else {
+        if (parentGroup.hasClass("has-error") == false)
+          parentGroup.addClass("has-error"),
+          parentGroup.append("<small class='text-danger text-helper'>Password isn't match!</small>")
+
+        password_retype = false;
+      }
+    }
 
     $(document).on('select2:open', () => {
       document.querySelector('.select2-search__field').focus();
@@ -201,14 +241,26 @@
   })
 
   function open_form() {
-    cardForm.removeClass("scale-out-tr")
-    cardForm.show(200)
+    cardForm.removeClass("scale-out-tr"), cardForm.show(200), save_method = "add"
     cardForm.find(".card-title").html("<i class='fa fa-user me-3'></i> Add New User")
+    $("#full_name").focus()
   }
 
   function edit(id) {
     save_method = "edit"
-    open_form()
+    global_id_user = id
+    open_form(), $("#full_name").focus()
+    $.ajax({
+      url: base_url + "admin/master/user/edit/" + id,
+      type: "GET",
+      dataType: "JSON",
+      success: function(data) {
+        console.log(data)
+      },
+      error: function(x, s, e) {
+        reskara_error_handler(x, base_url)
+      }
+    })
   }
 
   function deleteData(id) {

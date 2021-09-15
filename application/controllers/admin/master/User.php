@@ -50,4 +50,38 @@ class User extends Auth_Controller
 
         $this->response200(["items" => $data, "count" => count($data)]);
     }
+
+    function save()
+    {
+        $data = $this->input->post();
+
+        $username = $this->db->get_where("user", ["username" => $data['username']])->row();
+
+        if ($username) {
+            $this->response_custom(500, "username sudah ada!");
+            die();
+        }
+
+        $email = $this->db->get_where("user", ["email" => $data['email']])->row();
+
+        if ($email) {
+            $this->response_custom(500, "email sudah ada!");
+            die();
+        }
+
+
+        if ($data['password'] == $data['retypepassword']) {
+            unset($data['retypepassword']);
+            $result = $this->M_user->save($data);
+            $this->response200($result);
+        } else {
+            $this->response_custom(500, "password tidak sama!");
+        }
+    }
+
+    function edit($id)
+    {
+        $data = $this->db->get_where("user", ["id" => $id])->row();
+        $this->response200($data);
+    }
 }

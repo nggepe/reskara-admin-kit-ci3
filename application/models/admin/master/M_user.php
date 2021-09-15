@@ -67,4 +67,10 @@ class M_user extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function save($data)
+    {
+        $this->db->insert($this->table, $data);
+        return $this->db->insert_id();
+    }
 }
