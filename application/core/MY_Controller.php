@@ -159,3 +159,13 @@ class Auth_Controller extends Res_Controller
         return $status;
     }
 }
+
+interface ReskaraCrud
+{
+    public function save();
+    public function edit($id);
+    public function delete($id);
+    public function update($id);
+    public function index();
+    public function datatable();
+}
