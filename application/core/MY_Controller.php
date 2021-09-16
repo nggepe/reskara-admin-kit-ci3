@@ -24,10 +24,10 @@ class Res_Controller extends CI_Controller
         exit("Bad request!");
     }
 
-    function response401()
+    function response401($text = "Login required!")
     {
         http_response_code(401);
-        exit("Login required!");
+        exit($text);
     }
 }
 
@@ -39,6 +39,62 @@ class Auth_Controller extends Res_Controller
         $sess = $this->session->userdata();
         if (!isset($sess['reskara_login'])) {
             redirect(base_url() . "auth/sign/login401");
+        }
+        $this->validate_access_control();
+    }
+
+    private function list_menu(): array
+    {
+        $id_user = $this->get_user_login()->id;
+        $this->db->select("m.*, u.full_name, u.id as id_user");
+        $this->db->from("privilege_menu pm");
+        $this->db->join("menu m", "m.id = pm.id_menu", "left");
+        $this->db->join("privilege p", "p.id = pm.id_privilege", "left");
+        $this->db->join("user u", "u.id_privilege = p.id", "left");
+        $this->db->where("u.id", $id_user);
+        $this->db->order_by("m.sequence", "asc");
+        $data = $this->db->get()->result();
+        return $data;
+    }
+
+    private function validate_access_control()
+    {
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        if ($actual_link != base_url()) {
+            $uri = str_split($actual_link);
+            $actual_link = "";
+            for ($i = 0; $i <  count($uri); $i++) {
+                $value = $uri[$i];
+                if ($value == "?") break;
+                else $actual_link .= $value;
+            }
+            $uri = str_replace(base_url(), "", $actual_link);
+            $uri = explode("/", $uri);
+
+            $data = $this->list_menu();
+            $status = false;
+            for ($i = 0; $i < count($data); $i++) {
+                $value = $data[$i];
+                $path = explode("/", $value->path);
+                $set_status = false;
+
+                foreach ($path as $key => $value) {
+                    if (isset($uri[$key])) {
+                        if ($value == $uri[$key])
+                            $set_status = true;
+                        else $set_status = false;
+                    }
+                }
+
+                if ($set_status == true) {
+                    $status = true;
+                    break;
+                }
+            }
+            if ($status == false) {
+                $this->response401("You have no access here!");
+                die;
+            }
         }
     }
 
@@ -57,15 +113,7 @@ class Auth_Controller extends Res_Controller
 
     function get_menu()
     {
-        $id_user = $this->get_user_login()->id;
-        $this->db->select("m.*");
-        $this->db->from("privilege_menu pm");
-        $this->db->join("menu m", "m.id = pm.id_menu", "left");
-        $this->db->join("privilege p", "p.id = pm.id_privilege", "left");
-        $this->db->join("user u", "u.id_privilege = p.id", "left");
-        $this->db->where("u.id", $id_user);
-        $this->db->order_by("m.sequence", "asc");
-        $data = $this->db->get()->result();
+        $data = $this->list_menu();
         if ($data) :
             $menu = [];
             foreach ($data as $key => $value) {

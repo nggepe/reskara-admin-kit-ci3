@@ -70,7 +70,15 @@ class M_user extends CI_Model
 
     public function save($data)
     {
+        $data['password'] = md5($data['password']);
         $this->db->insert($this->table, $data);
         return $this->db->insert_id();
+    }
+
+    public function update($id, $data)
+    {
+        $data['password'] = md5($data['password']);
+        $this->db->where("id", $id);
+        $this->db->update($this->table, $data);
     }
 }

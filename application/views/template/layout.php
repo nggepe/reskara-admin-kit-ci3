@@ -27,7 +27,7 @@
     <div class="d-flex justify-content-center mb-2">
       <img src="<?= base_url('public') ?>/assets/img/avatar/gp-white.jpg" class="avatar" alt="gp">
     </div>
-    <div class="text-center mini-hide"> <span>Paijo Suwiryo</span> </div>
+    <div class="text-center mini-hide"> <span><?= $profile->full_name ?></span> </div>
     <div class="text-center mini-hide text-tertiary mb-3">
       <small>paijo@domain.com</small>
     </div>

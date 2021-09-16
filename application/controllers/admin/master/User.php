@@ -81,7 +81,51 @@ class User extends Auth_Controller
 
     function edit($id)
     {
-        $data = $this->db->get_where("user", ["id" => $id])->row();
+        $this->db->select("u.*, p.name as privilege");
+        $this->db->from("user u");
+        $this->db->join("privilege p", "p.id = u.id_privilege");
+        $this->db->where("u.id", $id);
+        $data = $this->db->get()->row();
+        unset($data->password);
         $this->response200($data);
+    }
+
+    function update($id)
+    {
+        $data = $this->input->post();
+
+        $username = $this->db->get_where("user", ["username" => $data['username']])->row();
+
+        if ($username) {
+            if ($username->id != $id) {
+                $this->response_custom(500, "username sudah ada!");
+                die();
+            }
+        }
+
+        $email = $this->db->get_where("user", ["email" => $data['email']])->row();
+
+        if ($email) {
+            if ($email->id != $id) {
+                $this->response_custom(500, "email sudah ada!");
+                die();
+            }
+        }
+
+
+        if ($data['password'] == $data['retypepassword']) {
+            unset($data['retypepassword']);
+            $this->M_user->update($id, $data);
+            $this->response200("oke");
+        } else {
+            $this->response_custom(500, "password tidak sama!");
+        }
+    }
+
+    function delete($id)
+    {
+        $this->db->where("id", $id);
+        $this->db->delete("user");
+        $this->response200("oke");
     }
 }

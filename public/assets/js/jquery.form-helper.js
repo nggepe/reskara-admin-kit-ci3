@@ -53,8 +53,16 @@ function swalSaveSuccess() {
   })
 }
 
+function alertDeleteSuccess() {
+  Swal.fire({
+    title: 'Great!',
+    text: "The data have been deleted!",
+    icon: "success",
+  })
+}
+
 function clearForm(el) {
-  $(el).find("input").val("")
-  $(el).find("textarea").val("")
-  $(el).find("select").val("")
+  el.find("input").val("")
+  el.find("textarea").val("")
+  el.find("select").val("")
 }
