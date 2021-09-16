@@ -107,12 +107,14 @@
     table, validation = false,
     save_method = "add",
     password_retype = true,
-    global_id_user
+    global_id_user, select2privilege
 
   $(document).ready(function() {
     cardForm.hide()
     $(".add-new-user").click(function(e) {
       open_form()
+      clearUserForm()
+      save_method = "add"
     })
 
     table = $("#user-table").DataTable({
@@ -163,8 +165,8 @@
         success: function(data) {
           swalSaveSuccess()
           table.ajax.reload()
-          clearForm(form)
-          $("#id_privilege").val("").trigger("change")
+          clearUserForm()
+          cardForm.hide(200)
         },
         error: function(x, s, e) {
           reskara_error_handler(x, base_url)
@@ -196,7 +198,7 @@
     $(document).on('select2:open', () => {
       document.querySelector('.select2-search__field').focus();
     });
-    $("#id_privilege").select2({
+    select2privilege = $("#id_privilege").select2({
       ajax: {
         url: base_url + 'admin/master/user/select2_privilege',
         dataType: 'json',
@@ -224,7 +226,7 @@
       },
       templateResult: function(data) {
         return $(`
-        <div >
+        <div class='select2-result-repository clearfix'>
             ${data.name}
         </div>
         `)
@@ -232,16 +234,21 @@
       templateSelection: function(data) {
         $(this).val(data.id)
 
-        return data.name
+        return data.name || data.text
       },
-      placeholder: "Identitas member/anggota",
+      placeholder: "Privilege",
       allowClear: true,
       width: "resolve"
     })
   })
 
+  function clearUserForm() {
+    clearForm($("#user-form"))
+    $("#id_privilege").val("").trigger("change")
+  }
+
   function open_form() {
-    cardForm.removeClass("scale-out-tr"), cardForm.show(200), save_method = "add"
+    cardForm.show(200), cardForm.removeClass("scale-out-tr")
     cardForm.find(".card-title").html("<i class='fa fa-user me-3'></i> Add New User")
     $("#full_name").focus()
   }
@@ -255,10 +262,19 @@
       type: "GET",
       dataType: "JSON",
       success: function(data) {
-        console.log(data)
+        $("#full_name").val(data.full_name)
+        $("#username").val(data.username)
+        $("#email").val(data.email)
+        $("#phone_number").val(data.phone_number)
+        $("#address").val(data.address)
+
+        var option = new Option(data.privilege, data.id_privilege, false, false)
+        select2privilege.append(option).trigger("change")
+        select2privilege.val(data.id_privilege)
+
       },
       error: function(x, s, e) {
-        reskara_error_handler(x, base_url)
+
       }
     })
   }
@@ -275,18 +291,16 @@
       cancelButtonText: 'Batal'
     }).then(function(result) {
       if (result.isConfirmed) {
-        showLoading()
+        // showLoading()
         $.ajax({
-          url: base_url + "members/delete/" + id,
+          url: base_url + "admin/master/user/delete/" + id,
           type: 'GET',
           success: function(data) {
             table.ajax.reload()
             alertDeleteSuccess()
-            hideLoading()
           },
           error: function(xhr, status, error) {
-            hideLoading()
-            alertSessionEnd()
+            reskara_error_handler(xhr, base_url)
           }
         })
       }

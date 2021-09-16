@@ -7,7 +7,9 @@ class Home extends Auth_Controller
     {
         $menu = $this->get_menu();
         $sidebar = $this->get_sidebarmenu($menu);
-        $this->load->view('template/layout', ["menu" => $sidebar]);
+        $profile = $this->db->get_where("user", ["id" => $this->get_user_login()->id])->row();
+        // print_r($this->get_user_login());
+        $this->load->view('template/layout', ["menu" => $sidebar, "profile" => $profile]);
     }
 
     private function get_sidebarmenu($menu): string
