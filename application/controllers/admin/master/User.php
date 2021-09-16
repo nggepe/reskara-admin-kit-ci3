@@ -1,5 +1,5 @@
 <?php
-class User extends Auth_Controller
+class User extends Auth_Controller implements ReskaraCrud
 {
     function __construct()
     {
@@ -72,14 +72,15 @@ class User extends Auth_Controller
 
         if ($data['password'] == $data['retypepassword']) {
             unset($data['retypepassword']);
-            $result = $this->M_user->save($data);
+            $data['password'] = md5($data['password']);
+            $result = $this->M_user->insert($data);
             $this->response200($result);
         } else {
             $this->response_custom(500, "password tidak sama!");
         }
     }
 
-    function edit($id)
+    public function edit($id)
     {
         $this->db->select("u.*, p.name as privilege");
         $this->db->from("user u");
@@ -90,7 +91,7 @@ class User extends Auth_Controller
         $this->response200($data);
     }
 
-    function update($id)
+    public  function update($id)
     {
         $data = $this->input->post();
 
@@ -115,6 +116,7 @@ class User extends Auth_Controller
 
         if ($data['password'] == $data['retypepassword']) {
             unset($data['retypepassword']);
+            $data['password'] = md5($data['password']);
             $this->M_user->update($id, $data);
             $this->response200("oke");
         } else {
@@ -122,10 +124,9 @@ class User extends Auth_Controller
         }
     }
 
-    function delete($id)
+    public function delete($id)
     {
-        $this->db->where("id", $id);
-        $this->db->delete("user");
+        $this->M_user->delete($id);
         $this->response200("oke");
     }
 }

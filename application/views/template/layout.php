@@ -25,11 +25,11 @@
       <button class="btn btn-default ml-auto py-0 px-0 minify-sidenav"><i class="fa fa-align-justify"></i><i class="fa fa-align-right"></i></button>
     </div>
     <div class="d-flex justify-content-center mb-2">
-      <img src="<?= base_url('public') ?>/assets/img/avatar/gp-white.jpg" class="avatar" alt="gp">
+      <img src="<?= base_url() . $profile->avatar ?>" class="avatar" alt="gp">
     </div>
     <div class="text-center mini-hide"> <span><?= $profile->full_name ?></span> </div>
     <div class="text-center mini-hide text-tertiary mb-3">
-      <small>paijo@domain.com</small>
+      <small><?= $profile->email ?></small>
     </div>
     <?= $menu ?>
   </nav>
@@ -47,7 +47,7 @@
       <ul class="appbar-menu">
         <li><a href="#"><i class="fa fa-bell"></i><span class="caption">Notifications</span></a></li>
         <li><a href="#"><i class="fa fa-envelope"></i><span class="caption">Emails</span></a></li>
-        <li class="dropdown"><a href="#"><img src="<?= base_url('public') ?>/assets/img/avatar/gp-white.jpg" alt="gp" class="appbar-avatar"><span class="caption visible">Paijo</span></a>
+        <li class="dropdown"><a href="#"><img src="<?= base_url() . $profile->avatar ?>" alt="gp" class="appbar-avatar"><span class="caption visible"><?= $profile->full_name ?></span></a>
           <ul class="py-2 primary-y-shadow rounded-3">
             <li><a href="#" class="py-1 d-flex justify-items-center">
                 <i class="fa fa-user text-blue me-2"></i>

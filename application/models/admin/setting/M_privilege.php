@@ -1,19 +1,20 @@
 <?php
 
-class M_user extends MY_Model
+class M_privilege extends MY_Model
 {
+    function __construct()
+    {
+        parent::__construct("privilege", "id");
+    }
+
     var $table = 'user';
     var $column = array(
         'id',
-        'full_name',
-        'username',
+        'name',
     ); //set column field database for order and search
     var $order = array('id' => 'desc');
 
-    function __construct()
-    {
-        parent::__construct('user', 'id');
-    }
+
 
     private function _get_datatables_query()
     {
