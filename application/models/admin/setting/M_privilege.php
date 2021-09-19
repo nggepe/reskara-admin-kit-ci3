@@ -73,4 +73,16 @@ class M_privilege extends MY_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+
+    public function get_menu($id)
+    {
+        $this->db->select("m.*, IF(p.id=$id, 'true', 'false') as status");
+        $this->db->from("menu m");
+        $this->db->join("privilege_menu pm", "pm.id_menu = m.id", "left");
+        $this->db->join("privilege p", "p.id = pm.id_privilege", "left");
+        $this->db->group_by("m.id");
+        $this->db->order_by("m.sequence", "asc");
+        return $this->db->get()->result();
+    }
 }

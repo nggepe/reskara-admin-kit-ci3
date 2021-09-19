@@ -66,3 +66,23 @@ function clearForm(el) {
   el.find("textarea").val("")
   el.find("select").val("")
 }
+
+function setloading() {
+  return `<div style="margin-top: auto; margin-bottom: auto" class="d-flex justify-content-center">
+  <div class="spinner-grow text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-secondary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-success" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-danger" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-warning" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>`
+}
