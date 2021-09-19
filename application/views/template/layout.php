@@ -131,12 +131,7 @@
     })
 
     function loading(url, after = "") {
-      $("#content").html(`
-      <div class="d-flex justify-content-center w-100 align-self-center" style="min-height: 77vh;">
-        <div class="spinner-border text-primary align-self-center" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>`)
+      $("#content").html(setloading())
       $.ajax({
         url: base_url + url,
         type: "GET",

@@ -57,6 +57,8 @@ class Auth_Controller extends Res_Controller
         return $data;
     }
 
+
+
     private function validate_access_control()
     {
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -98,6 +100,8 @@ class Auth_Controller extends Res_Controller
         }
     }
 
+
+
     function get_user_login()
     {
         return $this->session->userdata("reskara_login");
@@ -130,7 +134,7 @@ class Auth_Controller extends Res_Controller
         endif;
     }
 
-    private function find_child($data, $parent_id)
+    function find_child($data, $parent_id)
     {
         $menu = [];
 

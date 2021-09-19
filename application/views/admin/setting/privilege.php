@@ -58,12 +58,30 @@
               <thead class="text-center">
                 <th style="width: 80px;">No.</th>
                 <th>Name</th>
-                <th style="width: 105px;">#</th>
+                <th style="width: 143px;">#</th>
               </thead>
               <tbody></tbody>
             </table>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="privilege-modal" tabindex="-1" aria-labelledby="privilege-modal-Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="privilege-modal-Label">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@ var cardForm = $("#card-form"),
   table, validation = false,
   save_method = "add",
   password_retype = true,
-  global_id_privilege, select2privilege
+  global_id_privilege, select2privilege, privilege_data = []
 
 $(document).ready(function () {
   cardForm.hide()
@@ -117,6 +117,44 @@ function edit(id) {
       reskara_error_handler(x, base_url)
     }
   })
+}
+
+function access_setting(id) {
+  $.ajax({
+    url: base_url + "admin/setting/privilege/get_access_setting/" + id,
+    dataType: "JSON",
+    success: function (data) {
+      privilege_data = data
+      render_privilege_menu(privilege_data, id)
+    }
+  })
+  $("#privilege-modal").modal("show")
+}
+
+function render_privilege_menu(data, id) {
+  let html = ''
+
+  html += find_privilege_child(data, id)
+
+  $("#privilege-modal").find(".modal-body").html(html)
+}
+
+function find_privilege_child(data = [], id) {
+  let html = ''
+  data.forEach(function (e) {
+    html += `<div class="ms-3">`
+    html += `<input class="pm-control" type="checkbox" ${e.status == "true" ? "checked" : ""} onchange="set_privilege(${e.status}, ${e.id}, ${id}, this)" id="pm-${e.id}" value="${e.id}">`
+    html += `<label class='ms-3' for="pm-${e.id}">${e.name}</label>`
+    if (e.child.length > 0)
+      html += find_privilege_child(e.child, id)
+    html += `</div>`
+  })
+  return html
+}
+
+function set_privilege(status, id_menu, id_privilege, el) {
+  console.log(status, id_menu, id_privilege, el)
+  $("#privilege-modal").find(".modal-body").html(setloading())
 }
 
 function deleteData(id) {
