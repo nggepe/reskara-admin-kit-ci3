@@ -22,7 +22,7 @@ class Privilege extends Auth_Controller implements ReskaraCrud
             $row = array();
             $row[] = $no;
             $row[] = $key->name;
-            $row[] = '<a class="btn btn-sm btn-info text-white" href="javascript:void(0)" onclick="access_setting(' . $key->id . ')"><i class="fa fa-file-signature"></i></a> ' . '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit(' . "'" . $key->id . "'" . ')"><i class="fa fa-edit"></i></a>
+            $row[] = '<a class="btn btn-sm btn-info text-white" href="javascript:void(0)" onclick="access_setting(' . $key->id . ', ' . "'" . $key->name . "'" . ')"><i class="fa fa-file-signature"></i></a> ' . '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit(' . "'" . $key->id . "'" . ')"><i class="fa fa-edit"></i></a>
 				  <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="deleteData(' . "'" . $key->id . "'" . ')"><i class="fa fa-trash"></i></a>';
 
             $data[] = $row;

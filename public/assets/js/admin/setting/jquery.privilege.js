@@ -119,7 +119,9 @@ function edit(id) {
   })
 }
 
-function access_setting(id) {
+function access_setting(id, name) {
+  $("#privilege-modal").find(".modal-body").html(setloading())
+  $("#privilege-modal").find(".modal-title").html("Privilege " + name)
   $.ajax({
     url: base_url + "admin/setting/privilege/get_access_setting/" + id,
     dataType: "JSON",
@@ -162,8 +164,7 @@ function set_privilege(status, id_menu, id_privilege, el) {
       id_privilege: id_privilege
     },
     success: function (data) {
-      privilege_data = set_deep_child(privilege_data, status, id_menu)
-      render_privilege_menu(privilege_data, id_privilege)
+      access_setting(id_privilege)
     },
     error: function (x, s, e) {
       reskara_error_handler(x, base_url)
@@ -173,22 +174,6 @@ function set_privilege(status, id_menu, id_privilege, el) {
   })
 }
 
-function set_deep_child(data = [], status, id_menu) {
-  return data.map(function (v, i) {
-    var newData = v
-    var children = v.child || []
-    if (children.length > 0) {
-      newData.child = set_deep_child(newData.child, status, id_menu)
-    }
-
-    if (newData.id == id_menu) {
-      newData.status = `${!status}`
-      return newData
-    }
-    else return newData
-
-  })
-}
 
 function deleteData(id) {
   Swal.fire({

@@ -106,6 +106,7 @@ class M_privilege extends MY_Model
     {
         if ($status == "true") {
             $this->db->insert("privilege_menu", ["id_menu" => $id_menu, "id_privilege" => $id_privilege]);
+            $this->set_to_parents($id_menu, $id_privilege);
             return $this->db->insert_id();
         } else {
             $this->db->where("id_menu", $id_menu);
@@ -113,5 +114,14 @@ class M_privilege extends MY_Model
             $this->db->delete("privilege_menu");
             return "oke";
         }
+    }
+
+    private function set_to_parents($id_menu, $id_privilege)
+    {
+        $menu = $this->db->get_where("menu", ['id' => $id_menu])->row();
+        if ($menu->parent != null) :
+            $this->db->insert("privilege_menu", ["id_menu" => $menu->parent, "id_privilege" => $id_privilege]);
+            $this->set_to_parents($menu->parent, $id_privilege);
+        endif;
     }
 }
