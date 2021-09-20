@@ -75,14 +75,43 @@ class M_privilege extends MY_Model
     }
 
 
-    public function get_menu($id)
+    public function get_menu($id_privilege)
     {
-        $this->db->select("m.*, IF(p.id=$id, 'true', 'false') as status");
+        $this->db->select("m.*, IF(p.id=$id_privilege, 'true', 'false') as status, IFNULL(pm.id, NULL) as privilege_id");
         $this->db->from("menu m");
         $this->db->join("privilege_menu pm", "pm.id_menu = m.id", "left");
         $this->db->join("privilege p", "p.id = pm.id_privilege", "left");
-        $this->db->group_by("m.id");
+        // $this->db->group_by("m.id");
         $this->db->order_by("m.sequence", "asc");
-        return $this->db->get()->result();
+        $this->db->order_by("status", "desc");
+        $data = $this->db->get()->result();
+        $data = $this->remove_twin_menu($data, $id_privilege);
+        return $data;
+    }
+
+    private function remove_twin_menu($data, $id_privilege): array
+    {
+        $result = [];
+        foreach ($data as $key => $value) {
+            if ($key > 0) {
+                if ($value->id != $data[$key - 1]->id) {
+                    $result[] = $value;
+                }
+            } else $result[] = $value;
+        }
+        return $result;
+    }
+
+    public function set_access_setting($id_menu, $id_privilege, $status): mixed
+    {
+        if ($status == "true") {
+            $this->db->insert("privilege_menu", ["id_menu" => $id_menu, "id_privilege" => $id_privilege]);
+            return $this->db->insert_id();
+        } else {
+            $this->db->where("id_menu", $id_menu);
+            $this->db->where("id_privilege", $id_privilege);
+            $this->db->delete("privilege_menu");
+            return "oke";
+        }
     }
 }
