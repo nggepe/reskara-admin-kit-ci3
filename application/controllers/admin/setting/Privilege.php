@@ -78,4 +78,11 @@ class Privilege extends Auth_Controller implements ReskaraCrud
         endif;
         $this->response200($menu);
     }
+
+    function set_access_setting()
+    {
+        $data = $this->input->post();
+        $result = $this->M_privilege->set_access_setting($data['id_menu'], $data['id_privilege'], $data['status']);
+        $this->response200($result);
+    }
 }

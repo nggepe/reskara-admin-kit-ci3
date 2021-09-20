@@ -133,7 +133,6 @@ function access_setting(id) {
 
 function render_privilege_menu(data, id) {
   let html = ''
-
   html += find_privilege_child(data, id)
 
   $("#privilege-modal").find(".modal-body").html(html)
@@ -153,8 +152,42 @@ function find_privilege_child(data = [], id) {
 }
 
 function set_privilege(status, id_menu, id_privilege, el) {
-  console.log(status, id_menu, id_privilege, el)
   $("#privilege-modal").find(".modal-body").html(setloading())
+  $.ajax({
+    url: base_url + "admin/setting/privilege/set_access_setting",
+    type: "POST",
+    data: {
+      status: !status,
+      id_menu: id_menu,
+      id_privilege: id_privilege
+    },
+    success: function (data) {
+      privilege_data = set_deep_child(privilege_data, status, id_menu)
+      render_privilege_menu(privilege_data, id_privilege)
+    },
+    error: function (x, s, e) {
+      reskara_error_handler(x, base_url)
+      privilege_data = set_deep_child(privilege_data, !status, id_menu)
+      render_privilege_menu(privilege_data, id_privilege)
+    }
+  })
+}
+
+function set_deep_child(data = [], status, id_menu) {
+  return data.map(function (v, i) {
+    var newData = v
+    var children = v.child || []
+    if (children.length > 0) {
+      newData.child = set_deep_child(newData.child, status, id_menu)
+    }
+
+    if (newData.id == id_menu) {
+      newData.status = `${!status}`
+      return newData
+    }
+    else return newData
+
+  })
 }
 
 function deleteData(id) {
