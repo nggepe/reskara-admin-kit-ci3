@@ -120,7 +120,11 @@ class M_privilege extends MY_Model
     {
         $menu = $this->db->get_where("menu", ['id' => $id_menu])->row();
         if ($menu->parent != null) :
-            $this->db->insert("privilege_menu", ["id_menu" => $menu->parent, "id_privilege" => $id_privilege]);
+            $data = $this->db->get_where("privilege_menu", ['id_menu' => $menu->parent, 'id_privilege' => $id_privilege])->row();
+
+            if (!$data) {
+                $this->db->insert("privilege_menu", ["id_menu" => $menu->parent, "id_privilege" => $id_privilege]);
+            }
             $this->set_to_parents($menu->parent, $id_privilege);
         endif;
     }
