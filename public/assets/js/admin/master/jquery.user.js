@@ -90,9 +90,6 @@ $(document).ready(function () {
     }
   }
 
-  $(document).on('select2:open', () => {
-    document.querySelector('.select2-search__field').focus();
-  });
   select2privilege = $("#id_privilege").select2({
     ajax: {
       url: base_url + 'admin/master/user/select2_privilege',
